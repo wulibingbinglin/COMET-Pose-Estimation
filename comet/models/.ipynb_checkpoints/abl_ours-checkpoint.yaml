@@ -1,0 +1,431 @@
+# TODO :
+# Iteration Number for tracker
+# stable_scale
+
+
+
+seed: 0
+
+viz_ip: "localhost"
+
+dynamix: False
+
+
+
+testimc2024: False
+shallow_dim: 64
+shallower: False
+shallowshallow: False
+sssingle: False
+
+pre_ransac: 2048
+pre_max_error: 0.5
+pre_good_fl: False
+
+
+close_valid: False
+mega_clean: False
+noisy_track: -1
+noisy_pre: False
+trackl: -1
+force_eval: False
+fine_depth: 3
+sample_ffeat: False
+still_pose: False
+use_dit: True
+scale_tcorr: False
+max_normT: False
+rays: False
+rays_ours: True
+clip_trackL: -1
+prelimi_cam: True
+
+adapad: False
+pre_factor: 1
+inside_shuffle: False
+fine_hid: 128
+rot_aug: False
+rot_aug_range: 30
+pers_aug: False
+
+
+new_kub: True
+
+# downfneatr: 1
+downfneat: True
+ckpt_updatef: False
+
+linear_att: False
+also_trunk: False
+se3loss: False
+refinev2: True
+refinel2l: False
+onet_norm: False
+
+inverse_RT: False
+jitter_scale: [0.5, 1.05]
+jitter_trans: [-0.1, 0.1]
+
+
+
+loose_co3d: False
+track_downr: 2
+mega_persceneD: False
+cam_selfpatch: True
+camera_iter: 4
+camera_conv: False
+camera_pool: "max"
+concat_pose: False
+camera_dot: False
+repeat_mix: 3
+reverse_soft: False
+refine_with_f: False
+fine_tracker: True
+clamp_fine: False
+fine_normalize: False
+
+trunk_init: False
+# fine_softmax: True
+
+
+# freeze_module
+relax_load: True
+softmax_refine: False
+
+
+
+supervise_patch: False
+all_pred_p: False
+track_trainit: 4
+track_teseit: 6
+
+mixed_precision: "bf16"
+
+uformerdim: 384
+resi_uformer: True
+
+rope: False
+llamamlp: False
+more_kubric: False
+
+
+space_att: True
+
+fine_stable_scale: 1.0 
+stable_scale: 1.0
+
+
+xformerhead: 8
+xformeratt: "scaled_dot_product"
+use_xformer: False
+dummy: False
+
+crop_longest: True
+fre_tracker: False
+
+pradius: 10
+resumeTrack: False
+
+more_view: False
+
+
+imcstartidx: -1
+
+forceresume: False
+usetrackF: True
+
+comeon: False
+
+confsig: False
+
+pointrgb: False
+averaging: False
+
+correct_softm: True
+
+masking: False
+epiasconf: False
+
+ransac_iter: 10
+per_iter_num: 20
+
+avgglobalT: False
+
+z_see_track: -1
+# z_see_track_fix: False
+
+paired_pose: False
+
+init_pose_5p: True
+
+colmapbytrack: False
+evalcolmap: False
+evalransac: False
+
+compare_to_spsg: False
+
+antialias: False
+enable_point: False
+
+z_posenc: True
+eval_on_mega: False
+overlap_thres: 0.1
+
+# kubric_seqlen: 16
+# kubric_bs: 4
+kubric_rand: False
+use_laf: False
+all_see_pivot: False
+all_see_pivot_res: False
+
+pose_upon_track: False
+refine_track: False
+
+
+smallimg: -1
+t_refine_r: 0.5
+track_withKP: False
+track_withOF: False
+# track_roPE: False
+
+pose_by_epi: False
+epiloss_w: 1.0
+var_lr: False
+
+fpn_cross: 3
+fpn_self: 3
+uptoc4: False
+
+# test_imc: False
+test_by_GGS: False
+
+loftr_pose: False
+
+force_test: False
+unwrap: False
+unwrap_iter: True
+
+skip_geo: False
+
+track_onlya1: False
+weightT: 1.0 
+
+track_by_grid: False
+track_by_spsg: True
+
+gt_track: False
+track_kp_res: 0.0
+
+hdimg: False
+trackhdimg: False
+
+
+
+colvisthr: 0.8
+cossimthr: 0.8
+
+tmp:
+    # really in debugging, can be deleted anytime
+    posemb_inside_loop: False
+    deeppred: False
+    delta_enlarge: False
+    freeze_resnet: False
+
+
+GGS:
+    splits: -1
+    enable: True
+    start_step: 10
+    learning_rate: 0.01
+    iter_num: 100
+    sampson_max: 10
+    min_matches: 10
+    alpha: 0.0001
+    sptype: "superpoint_max"
+
+
+
+test:
+    CO3D_DIR: "/fsx-repligen/shared/datasets/co3d/"
+    CO3D_ANNOTATION_DIR: "/data/home/jianyuan/regenerated_co3d"
+    
+    random_order: True
+    num_frames: 10
+
+    test_interval: 500
+    ##########################
+
+    img_size: 256
+    category: seen
+
+    normalize_cameras: True
+    normalize_T: True
+    persistent_workers: False
+
+    preload_image: False
+    cudnnbenchmark: False
+    first_camera_transform: True
+    min_num_images: 50
+    compute_optical: True
+
+    load_point: False
+    max_3dpoints: 20480
+    load_track: True
+
+
+train:
+    #####################################################################
+    # debugging
+
+    mixset: "km"
+    reproj_loss: False
+    reproj_loss_thres: -1
+    reprojC_loss_w: -1
+    reproj_epoch: -1
+    ###
+    fix_first_cor: True
+    ndc_track: False
+    huber: False
+    track_weight: 0.1
+    diffuser: False
+    sort_by_filename: False
+    vis_aware: True
+    vis_aware_w: 0.1
+    #####################################################################
+    category: seen
+    restart_num: 320
+    lr: 0.00001      # The base lr is 0.0001, and please times it with your number of accelerator processes (GPU)
+    resume_ckpt: "ckpt/best.bin"
+    epochs: 500
+    ckpt_interval: 1
+    # mixed_precision: None
+    num_workers: 8
+
+    eval_interval: 1
+
+    len_train: 16384
+    len_eval: 256
+
+    max_images: 32
+    normalize_cameras: True
+    normalize_T: True
+    dynamic_batch: True
+    pt3d_co3d: False
+
+    persistent_workers: False
+
+    pin_memory: False
+    clip_grad: 1.0
+    preload_image: False
+    cudnnbenchmark: False
+    first_camera_transform: True
+    min_num_images: 25
+    images_per_seq: [3, 25]
+    compute_optical: True
+    color_aug: True
+    erase_aug: False
+    batch_repeat: -1
+    warmup_sche: True
+    CO3D_DIR: "/fsx-repligen/shared/datasets/co3d/"
+    CO3D_ANNOTATION_DIR: "/data/home/jianyuan/regenerated_co3d"
+    auto_resume: True
+    load_point: False 
+    load_track: True
+    load_camera: False
+    max_3dpoints: 20480
+    close_box_aug: False
+    # track_num: 4096
+    #    add
+    img_size: 512
+    print_interval: 50
+    eval_print_interval: 30
+    track_num: 512
+    use_confidence_filter: False
+    enable_time_smoothing: False
+    use_grid_sample: False
+    use_detach_pose_enc: False
+    weight_trans: 1.0
+    weight_rot: 2.0
+    use_trans_in_feat: True
+    use_trans_time_depth: 2
+    use_trans_num_heads: 4
+    use_trans_mlp_ratio: 4
+    feature_fusion: True
+    motion_consistency_weight_direction: 1.0
+    motion_consistency_weight_magnitude: 0.5
+    filterByvalidpoint: False
+    dataset: "AMD_eval"
+    teacher_forcing:
+        enabled: true
+        start_ratio: 1.0    # 初始teacher forcing比例
+        end_ratio: 0.2      # 最终teacher forcing比例
+        transition_epochs: 300  # 在前300个epoch中逐渐过渡
+        overlap_ratio: 0.5  # 重叠区域使用真实值的比例
+
+
+visual_track: False
+visual_pose: False
+warmup_ratio: 0
+warmup_lr_init: 0.0000001
+repeat_kub: 3
+seqlen: 16
+batch_size: 1
+debug: True
+debugeval: True
+profile: False
+exp_name: ckpt_uvz_time_YT_mask2
+window_len: 8
+share_coarse_features: False
+forward_window_pose: False
+track_conf: False
+enable_track: True
+enable_pose: True
+
+freeze_ctrack: False
+freeze_ftrack: False
+freeze_track: True
+output_dir: "abl_ours_eval_fold"
+exp_dir: "abl_ours_eval_fold"
+labor_input_traj: False  # 是否人工提供第一帧的轨迹
+inference: False
+visualize: False # 就是在训练的时候要不要可视化一下图像和pose
+default_focal_length: 1745
+
+
+MODEL:
+    _target_: E2Epose2.COMET
+
+    TRACK:
+        _target_: models.track_predictor.TrackerPredictor
+
+        efficient_corr: False
+
+
+        COARSE:
+            stride: 4
+            down_ratio: 2
+            FEATURENET:
+                _target_: models.track_modules.blocks.BasicEncoder
+
+            PREDICTOR:
+                _target_: models.track_modules.base_track_predictor.BaseTrackerPredictor
+
+        FINE:
+            FEATURENET:
+                _target_: models.track_modules.blocks.ShallowEncoder
+                input_dim: 3
+
+
+            PREDICTOR:
+                _target_: models.track_modules.base_track_predictor.BaseTrackerPredictor
+                stride: 1
+                depth: 4
+                corr_levels: 3
+                corr_radius: 3
+                latent_dim: 32
+                hidden_size: 256
+                fine: True
+                use_spaceatt: False
+
+    CAMERA:
+        _target_: models.camera_predictor10.CameraPredictor

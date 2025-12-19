@@ -1,0 +1,121 @@
+hydra:
+    run:
+        dir: .
+
+
+model_name: "vggsfm_v2_0_0"
+
+seed: 0
+img_size: 1024
+
+
+debug: True
+
+
+center_order: False
+mixed_precision: fp16
+extract_color: True
+filter_invalid_frame: True
+
+comple_nonvis: True
+query_frame_num: 3  # 可改
+robust_refine: 2
+BA_iters: 1
+
+fine_tracking: True
+
+camera_type: "SIMPLE_PINHOLE"   # optional: ["SIMPLE_PINHOLE", "SIMPLE_RADIAL"]
+
+load_gt: False
+viz_visualize: True
+gr_visualize: False
+
+fmat_thres: 4.0
+max_reproj_error: 4.0
+init_max_reproj_error: 4.0
+
+max_query_pts: 2048  # 可改
+
+dense_depth: False
+avg_pose: True
+shared_camera: False
+
+save_to_disk: True
+SCENE_DIR: examples/cake
+
+#resume_ckpt:  ckpt/vggsfm_v2_0_0.bin
+#auto_download_ckpt: True
+resume_ckpt: "E:/11learningspace/cv/github/vggsfm-main/vggsfm-main/vggsfm/models/vggsfm_v2_0_0.bin"
+auto_download_ckpt: False
+
+query_method: "aliked"
+
+use_poselib: False
+
+shift_point2d_to_original_res: False
+
+make_reproj_video: False
+
+visual_tracks: True
+visual_query_points: True
+visual_dense_point_cloud: True
+
+
+query_by_midpoint: False
+query_by_interval: False
+
+concat_extra_points: False
+extra_pt_pixel_interval: -1
+extra_by_neighbor: -1
+
+#add in basepredictor
+track_conf: False
+
+
+MODEL:
+    _target_: vggsfm.models.VGGSfM
+
+    TRACK:
+        _target_: vggsfm.models.TrackerPredictor
+
+        efficient_corr: False
+
+
+        COARSE:
+            stride: 4
+            down_ratio: 2
+            FEATURENET:
+                _target_: vggsfm.models.BasicEncoder
+
+            PREDICTOR:
+                _target_: vggsfm.models.BaseTrackerPredictor
+
+        FINE:
+            FEATURENET:
+                _target_: vggsfm.models.ShallowEncoder
+
+
+            PREDICTOR:
+                _target_: vggsfm.models.BaseTrackerPredictor
+                depth: 4
+                corr_levels: 3
+                corr_radius: 3
+                latent_dim: 32
+                hidden_size: 256
+                fine: True
+                use_spaceatt: False
+
+    CAMERA:
+        _target_: vggsfm.models.CameraPredictor
+
+
+
+# max_points_num=163840 in predict_tracks and max_tri_points_num=819200 in triangulate_tracks.
+# probesize
+# batch_size
+# _target_ 指定主模块类路径为 vggsfm.models.VGGSfM，即主类是 VGGSfM。
+# 其余配置（如 TRACK、CAMERA）是 VGGSfM 初始化时需要的参数。
+     # _target_ 字段的作用是指定一个目标类（或者是一个函数）。通过这种方式，你的配置文件实际上可以告诉你的程序“在这里我想用 vggsfm.models.VGGSfM 这个类”
+        #    这里的 TRACK、CAMERA 和 TRIANGULAE 都是字典，它们会被传递到 VGGSfM 类的构造函数中。具体地，self.cfg.MODEL 会被传递到 instantiate 函数，
+# instantiate 函数会根据这个配置加载 VGGSfM 类，并且从配置中提取出 TRACK、CAMERA 和 TRIANGULAE 等字典，传递给 VGGSfM 的构造函数。
+

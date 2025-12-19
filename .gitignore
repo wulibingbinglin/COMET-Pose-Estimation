@@ -1,0 +1,21 @@
+# 忽略 Python 缓存
+__pycache__/
+*.pyc
+
+# 忽略大数据集和权重
+*.pth
+*.bin
+*.tar
+*.zip
+*.gz
+datasets/
+checkpoints/
+logs/
+output/
+track_visual/
+abl_*/
+
+# 忽略系统文件
+.DS_Store
+.idea/
+.vscode/
