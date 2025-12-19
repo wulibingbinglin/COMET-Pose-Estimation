@@ -1,12 +1,18 @@
 # COMET: Continuous-time Trajectory-guided Temporal Modeling for Spacecraft Pose Estimation
 
+## Project Overview
+
+<img width="1806" height="652" alt="image" src="https://github.com/user-attachments/assets/fcc2360d-1d2c-428b-afed-6912360280cb" />
+
+COMET address spacecraft pose estimation from a monocular RGB sequence with known intrinsics. The framework consists of two key modules. First, Trajectory-Guided Temporal Modeling integrates patch-level image features with point trajectories and continuous-time encodings, enabling long-range temporal reasoning and reducing reliance on explicit priors. Second, Geometry-Aware Pose Regression (GAPR) jointly estimates rotation quaternions, image-plane translations, and relative depth from the fused spatio-temporal representation.
+
 ## 1. Introduction
 
 **COMET** is a framework designed for accurate 6-DoF pose estimation of non-cooperative spacecraft under challenging conditions (unknown geometry, extreme illumination, and rapid motion).
 
 Existing approaches often struggle with generalization and scale ambiguity. We propose:
 
-* **Trajectory-Guided Temporal Modeling (\mathfrak{T}_P & \mathfrak{T}_F):** Fuses local motion trajectories with continuous-time encodings to capture long-range dependencies.
+* **Trajectory-Guided Temporal Modeling ( $\mathfrak{T}_P(\cdot)$ &  $\mathfrak{T}_F(\cdot)$):** Fuses local motion trajectories with continuous-time encodings to capture long-range dependencies.
 * **Geometry-Aware Pose Regression (GAPR):** Jointly predicts rotation quaternions, image-plane translations, and relative depth to explicitly mitigate monocular scale ambiguity.
 
 By unifying trajectory dynamics with temporal feature reasoning, COMET achieves state-of-the-art results on standard benchmarks.
@@ -30,8 +36,8 @@ Please install the dependencies via `pip`. Key packages include:
 
 ```bash
 # Clone the repository
-git clone [Your-Repository-URL]
-cd COMET
+git clone https://github.com/wulibingbinglin/COMET-Pose-Estimation.git
+cd COMET-Pose-Estimation
 
 # Install requirements
 bash install.sh
@@ -44,14 +50,17 @@ Due to the large size of datasets and pre-trained weights, they are hosted on Ba
 
 ### 3.1 Download Links
 
-* **Model Weights (Pre-trained Checkpoints)**
-* **Download Link**: [点击下载权重 (Baidu Netdisk)](https://www.google.com/search?q=https://pan.baidu.com/s/1KdX2rlDw5IS_cOmikar7qQ%3F)
-* **Password**: `2ftj`
+Due to the large size, datasets and weights are hosted on Baidu Netdisk:
 
+* **Model Weights (Pre-trained Checkpoints)**
+* **File**: `all_ckpt.zip` (Contains all ablation and full model weights)
+* **Download Link**: (https://pan.baidu.com/s/1HlN9T2nnYtuQEO3gbFFwvA?pwd=i3jf)
+* **Password**: `i3jf`
 
 * **Datasets (Evaluation & Demo Data)**
-* **Download Link**: [点击下载数据集 (Baidu Netdisk)](https://www.google.com/search?q=https://pan.baidu.com/s/1KdX2rlDw5IS_cOmikar7qQ%3F)
+* **Download Link**: (https://www.google.com/search?q=https://pan.baidu.com/s/1KdX2rlDw5IS_cOmikar7qQ%3F)
 * **Password**: `2ftj`
+* **Source**: Based on the benchmark proposed in [TAP-Track](https://ieeexplore.ieee.org/document/11062488).
 
 
 
@@ -122,39 +131,54 @@ python abl_ours.py
 
 ## 5. Ablation Studies
 
+To evaluate the contribution of each module, we provide specific configurations and weights corresponding to the results in our paper. These modules include Trajectory-Guided Temporal Modeling ($\mathfrak{T}_P$ & $\mathfrak{T}_F$) and Geometry-Aware Pose Regression (GAPR).
+
 | Experiment | Module Removed | Description | Config File | Weight File |
 | --- | --- | --- | --- | --- |
-| **Ours (Full)** | None | Full COMET Framework | `abl_ours.py` | `best.bin` |
-| **w/o \mathfrak{T}_P** | Trajectory Prior | Removes trajectory-guided modeling | `abl_track.yaml` | `abl_track.bin` |
-| **w/o \mathfrak{T}_F** | Temporal Feat. | Removes long-range temporal dependencies | `abl_time.yaml` | `abl_time.bin` |
+| **COMET (Full)** | None | Full COMET Framework | `abl_ours.yaml` | `best.bin` |
+| **w/o $\mathfrak{T}_P$** | Trajectory Prior | Removes trajectory-guided modeling | `abl_track.yaml` | `abl_track.bin` |
+| **w/o $\mathfrak{T}_F$** | Temporal Feat. | Removes long-range temporal dependencies | `abl_time.yaml` | `abl_time.bin` |
 | **w/o GAPR** | Geometry Head | Replaces GAPR with direct regression | `abl_uvz.yaml` | `abl_uvz.bin` |
 | **Baseline** | All | Removes all proposed modules | `abl_all.yaml` | `abl_all.bin` |
 
-**How to run ablations:**
-Modify the configuration loader in `abl_test.py`. For example, to test **w/o \mathfrak{T}_P**:
+**How to run evaluation:**
+All ablation experiments and the full model evaluation are performed via the `abl_test.py` script. You only need to modify the configuration file path in the script's `main` block to match the experiment you wish to reproduce.
+
+For example, to evaluate the **Full COMET Model**:
 
 1. Open `abl_test.py`.
-2. Load `abl_track.yaml`:
+2. Ensure the configuration points to `abl_ours.yaml`:
 ```python
 if __name__ == '__main__':
-    cfg = OmegaConf.load('abl_track.yaml')
+    # Load the desired configuration for evaluation
+    cfg = OmegaConf.load('abl_ours.yaml') 
     test_fn(cfg)
 
 ```
 
 
-3. Run: `python abl_test.py`
+3. Run the evaluation script in your terminal:
+```bash
+python abl_test.py
+
+```
+
+
+
+To test other ablation variants (e.g., **w/o $\mathfrak{T}_P$**), simply change the configuration filename to `abl_track.yaml` in the script and re-run it.
+
+---
 
 
 ## 6. Results
 
 The following table presents the quantitative results of our ablation studies on the AMD evaluation dataset. These metrics validate the effectiveness of each proposed module in **COMET**.
 
-| Experiment | Acc@5° (X) | Acc@5° (Y) | Acc@5° (Z) | R-Acc@5° | T-Acc@15° | **AUC @ 30** |
-| --- | --- | --- | --- | --- | --- | --- |
+| Experiment | RollError@5° | PitchError@5° | YawError@5° | RRE@5° | RTE@15° | **AUC @ 30** |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | **Baseline (abl_all)** | 87.40% | 91.99% | 94.24% | 72.84% | 54.51% | 47.32% |
-| **w/o \mathfrak{T}_P (abl_track)** | 87.13% | 92.57% | 93.72% | 75.08% | 57.05% | 49.77% |
-| **w/o \mathfrak{T}_F (abl_time)** | 95.03% | 97.43% | 97.50% | 85.35% | 68.48% | 58.42% |
+| **w/o $\mathfrak{T}_P$ (abl_track)** | 87.13% | 92.57% | 93.72% | 75.08% | 57.05% | 49.77% |
+| **w/o $\mathfrak{T}_F$ (abl_time)** | 95.03% | 97.43% | 97.50% | 85.35% | 68.48% | 58.42% |
 | **w/o GAPR (abl_xyz)** | 91.28% | 95.28% | 95.41% | 80.69% | 70.82% | 59.18% |
 | **COMET (Ours)** | **95.82%** | **97.68%** | **97.41%** | **85.70%** | **77.48%** | **64.76%** |
 

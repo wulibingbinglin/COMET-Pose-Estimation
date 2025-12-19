@@ -30,7 +30,7 @@ def test_fn(cfg: DictConfig):
 
     if accelerator.is_main_process:
         csv_path = os.path.join(cfg.output_dir, "test_results.csv")
-        csv_fields = ["epoch", "it", "mode"] + list(TO_PLOT_METRICS) + ["lr"]
+        csv_fields = ["epoch", "it", "mode"] + list(TO_PLOT_METRICS)
         logger = CsvLogger(csv_path, csv_fields)
         accelerator.print(f"Test results will be saved to {csv_path}")
 
