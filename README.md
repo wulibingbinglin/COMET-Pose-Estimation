@@ -12,7 +12,7 @@ COMET address spacecraft pose estimation from a monocular RGB sequence with know
 
 Existing approaches often struggle with generalization and scale ambiguity. We propose:
 
-* **Trajectory-Guided Temporal Modeling ( $\mathfrak{T}_P(\cdot)$ &  $\mathfrak{T}_F(\cdot)$):** Fuses local motion trajectories with continuous-time encodings to capture long-range dependencies.
+* **Trajectory-Guided Temporal Modeling ( $\mathfrak{T}_P$ &  $\mathfrak{T}_F$):** Fuses local motion trajectories with continuous-time encodings to capture long-range dependencies.
 * **Geometry-Aware Pose Regression (GAPR):** Jointly predicts rotation quaternions, image-plane translations, and relative depth to explicitly mitigate monocular scale ambiguity.
 
 By unifying trajectory dynamics with temporal feature reasoning, COMET achieves state-of-the-art results on standard benchmarks.
