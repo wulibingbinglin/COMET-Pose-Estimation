@@ -21,7 +21,7 @@ By unifying trajectory dynamics with temporal feature reasoning, COMET achieves 
 
 The code is tested on **Linux** (AutoDL) with **Python 3.10**.
 
-### Core Dependencies
+### 2.1 Core Dependencies
 
 Please install the dependencies via `pip`. Key packages include:
 
@@ -32,7 +32,7 @@ Please install the dependencies via `pip`. Key packages include:
 * SciPy
 * Matplotlib
 
-### Installation
+### 2.2 Installation
 
 ```bash
 # Clone the repository
@@ -41,6 +41,28 @@ cd COMET-Pose-Estimation
 
 # Install requirements
 bash install.sh
+
+```
+
+### 2.3 Environment Setup 
+
+Before running the code, you **must** add the following directories to your `PYTHONPATH`. 
+
+**Linux / macOS:**
+
+```bash
+# Replace /path/to/COMET with your actual project path
+export PROJECT_ROOT=/path/to/COMET
+
+export PYTHONPATH=$PYTHONPATH:$PROJECT_ROOT:$PROJECT_ROOT/comet:$PROJECT_ROOT/comet/models
+
+```
+
+**Windows (PowerShell):**
+
+```powershell
+$PROJECT_ROOT = "E:\path\to\COMET"  # Replace with your actual path
+$env:PYTHONPATH = "$env:PYTHONPATH;$PROJECT_ROOT;$PROJECT_ROOT\comet;$PROJECT_ROOT\comet\models"
 
 ```
 
