@@ -15,7 +15,7 @@ from accelerate.test_utils import training
 from pytorch3d.renderer.cameras import CamerasBase
 import torch.functional as F
 
-from train_eval_func_new import QuaternionCameras
+from train_eval_func_new_cp5 import QuaternionCameras
 from train_util import set_seed_and_print
 
 from refine_track import refine_track  # 重新导入模块

@@ -11,7 +11,7 @@ from scipy.spatial.transform import Rotation as Rt
 from torchvision import transforms
 import torchvision.transforms.functional as TF  # 推荐方式处理张量到PIL
 
-from datasets.demo_loader import calculate_crop_parameters
+# from datasets.demo_loader import calculate_crop_parameters
 
 
 def bbox_of_bright_regions(pil_img, thresh=30):
