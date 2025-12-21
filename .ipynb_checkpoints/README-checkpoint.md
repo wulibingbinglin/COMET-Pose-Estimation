@@ -58,10 +58,9 @@ Due to the large size, datasets and weights are hosted on Baidu Netdisk:
 * **Password**: `i3jf`
 
 * **Datasets (Evaluation & Demo Data)**
-* **Download Link**: (https://www.google.com/search?q=https://pan.baidu.com/s/1KdX2rlDw5IS_cOmikar7qQ%3F)
-* **Password**: `2ftj`
+* **Download Link**: (https://pan.baidu.com/s/1suKhjwNzxsGdaimYh-Mc5g?pwd=wmty)
+* **Password**: `wmty`
 * **Source**: Based on the benchmark proposed in [TAP-Track](https://ieeexplore.ieee.org/document/11062488).
-
 
 
 ### 3.2 Directory Structure
@@ -69,33 +68,32 @@ Due to the large size, datasets and weights are hosted on Baidu Netdisk:
 After downloading, please organize your project root directory as follows:
 
 ```text
-Project_Root/
-├── models/
-│   └── ckpt/                  <-- Place all downloaded .bin weights here
-│       ├── best.bin           (Ours: Full COMET Model)
-│       ├── abl_track.bin      (Ablation: w/o Trajectory Module)
-│       ├── abl_time.bin       (Ablation: w/o Temporal Features)
-│       ├── abl_uvz.bin        (Ablation: w/o GAPR Head)
-│       └── abl_all.bin        (Baseline: w/o All Proposed Modules)
-│
-├── datasets/
-│   ├── AMD/
-│   │   └── AMD_eval/          <-- Evaluation Data for Ablation Studies
+COMET-Pose-Estimation/ (Repository Root)
+├── comet/
+│   ├── models/
+│   │   └── ckpt/                  <-- Create this folder for weights
+│   │       ├── best.bin           (Full COMET Model)
+│   │       ├── abl_track.bin      (Ablation: w/o Trajectory Module)
+│   │       ├── abl_time.bin       (Ablation: w/o Temporal Features)
+│   │       ├── abl_uvz.bin        (Ablation: w/o GAPR Head)
+│   │       └── abl_all.bin        (Baseline: w/o All Proposed Modules)
 │   │
-│   └── DCA_SpaceNet/
-│       └── model1/            <-- Demo Data & Custom Testing Sequences
+│   └── datasets/                  <-- Place your data here
+│       ├── AMD/
+│       │   └── AMD_eval/          (Evaluation Data for Ablations)
+│       └── DCA_SpaceNet/
+│           └── model1/            (Demo Data & Custom Sequences)
+├── README.md
+└── install.sh
 
 ```
 
 ## 4. Usage
 
-### 4.1 Quick Demo (Testing)
-
-To evaluate the model on the sample sequence (DCA_SpaceNet), run the end-to-end inference script:
+> **📍 Execution Directory**: To ensure internal paths for configurations and weights are correctly resolved, all scripts **must** be executed from the `comet/models/` directory.
 
 ```bash
-python test_e2epose2.py
-
+cd comet/models/
 ```
 
 **Configuration Options (in `test_e2epose2.py`):**
@@ -134,7 +132,7 @@ python abl_ours.py
 To evaluate the contribution of each module, we provide specific configurations and weights corresponding to the results in our paper. These modules include Trajectory-Guided Temporal Modeling ($\mathfrak{T}_P$ & $\mathfrak{T}_F$) and Geometry-Aware Pose Regression (GAPR).
 
 | Experiment | Module Removed | Description | Config File | Weight File |
-| --- | --- | --- | --- | --- |
+| :--- | :---: | :---: | :---: | :---: |
 | **COMET (Full)** | None | Full COMET Framework | `abl_ours.yaml` | `best.bin` |
 | **w/o $\mathfrak{T}_P$** | Trajectory Prior | Removes trajectory-guided modeling | `abl_track.yaml` | `abl_track.bin` |
 | **w/o $\mathfrak{T}_F$** | Temporal Feat. | Removes long-range temporal dependencies | `abl_time.yaml` | `abl_time.bin` |
