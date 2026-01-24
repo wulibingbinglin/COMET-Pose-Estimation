@@ -202,6 +202,31 @@ The following table presents the quantitative results of our ablation studies on
 | **w/o GAPR (abl_xyz)** | 91.28% | 95.28% | 95.41% | 80.69% | 70.82% | 59.18% |
 | **COMET (Ours)** | **95.82%** | **97.68%** | **97.41%** | **85.70%** | **77.48%** | **64.76%** |
 
+## 7. Efficiency & Limitations (Supplementary Material)
+
+As mentioned in the paper, we provide detailed analysis regarding the runtime efficiency and failure modes of our method here.
+
+### 7.1 Runtime Analysis
+
+COMET demonstrates promising real-time capability. Evaluated on a single **NVIDIA RTX 4090**, our model (253.6M parameters) achieves a throughput of **41.53 FPS** (approx. 24ms latency). This significantly exceeds the 1-10 Hz requirement for typical spacecraft GNC systems.
+
+Comparatively, COMET outperforms existing instance-specific methods even when they are evaluated on stronger hardware (A100), as shown below:
+
+| Method | FPS | GPU Hardware | Note |
+| :--- | :---: | :---: | :--- |
+| [CA-SpaceNet](https://arxiv.org/abs/2207.07869) | 26.7 | NVIDIA A100 | Instance-specific |
+| [WDPose](https://arxiv.org/abs/2104.00337) | 40.0 | NVIDIA A100 | Instance-specific |
+| **COMET (Ours)** | **41.5** | **NVIDIA RTX 4090** | **Model-agnostic** |
+
+### 7.2 Failure Modes
+
+While COMET achieves state-of-the-art performance, we observe performance degradation in specific challenging scenarios:
+
+* **Rapid Rotation:** Our method relies on temporal constraints between frames. In scenarios with extremely rapid target rotation, the overlap between adjacent frames decreases drastically, weakening the inter-frame temporal constraints. This may challenge the temporal modeling framework, potentially leading to estimation failure or jitter.
+* **Extreme Occlusion:** Although robust to partial occlusion, long-duration full occlusion remains a challenging problem for continuous tracking.
+
+Future work will explore stronger geometric priors to mitigate these issues.
+
 ### Key Observations:
 
 * **GAPR Head Impact**: Comparing `ours` with `abl_xyz` (w/o GAPR), the AUC increases from **59.18% to 64.76%**, proving that explicitly modeling image-plane translations and relative depth effectively mitigates monocular scale ambiguity.
